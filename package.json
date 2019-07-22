@@ -6,7 +6,6 @@
     "start": "node ./server/bin/www",
     "start-dev": "PORT=3001 nodemon ./server/bin/www",
     "build": "cd client && npm i && npm run build",
-    "heroku-postbuild": "cd client && yarn && yarn build",
     "test": "exit 0"
   },
   "dependencies": {
