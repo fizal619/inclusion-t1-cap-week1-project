@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
-
+const db = require('../database.js');
+const handler = require('../lib/messageHandler');
+const mem = {};
 
 // req.body format
-
 // {
 //     ToCountry: 'US',
 //     ToState: 'CA',
@@ -45,13 +46,10 @@ router.post('/create', (req, res) => {
 /* GET reservations list. */
 router.get('/', function(req, res, next) {
 
-    res.json([{
-        id: 1,
-        name: "Daniela Agrippa, party of 2 @ 8pm"
-    }, {
-        id: 2,
-        name: "Phaidros Guillaume, party of 5 @ 7pm"
-    }]);
+    db.Reservation.findAll()
+        .then(reservations=>{
+            res.json(reservations);
+        });
 });
 
 module.exports = router;
