@@ -16,7 +16,11 @@ class ReservationList extends Component {
             <div className="App">
                 <h1>Reservations</h1>
                 {this.state.reservations.map(reservation =>
-                    <div key={reservation.id}>{reservation.phone}</div>
+                    <div key={reservation.id}>
+                        {reservation.phone} -
+                        {new Date(reservation.date).toDateString()} at
+                        {reservation.time}
+                    </div>
                 )}
             </div>
         );

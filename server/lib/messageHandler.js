@@ -2,10 +2,11 @@ module.exports = (input, phone, mem) => {
   // Default case
   phone = phone+'';
   if (!input.includes('RESERVATION')){
-    return {
+    mem[phone] = {
       ...mem[phone],
       msg: `Text RESERVATION to begin creating your reservation.`
     }
+    return mem[phone];
   }
 
   if (input === 'RESERVATION') {

@@ -33,10 +33,24 @@ const mem = {};
 router.post('/create', (req, res) => {
     console.log('====');
     console.log(req.body);
+
+    handler(req.body.Body, req.body.From, mem);
+
+    if (mem[req.body.From].success) {
+        const reservation = mem[req.body.From];
+        if (reservation.date && reservation.time && reservation.phone) {
+            db.Reservation.create({
+                phone: reservation.phone,
+                time: reservation.time,
+                date: reservation.date
+            })
+        }
+    }
+
     console.log('====');
     const twiml = new MessagingResponse();
 
-    twiml.message('The Robots are coming! Head for the hills!');
+    twiml.message(mem[req.body.From].msg);
 
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
