@@ -5,6 +5,54 @@ const db = require('../database.js');
 const handler = require('../lib/messageHandler');
 const mem = {};
 
+// slack req.body
+// {
+//     token: 'M7h3KsS2AtB0qPqxU2ODgqkE',
+//     team_id: 'T2K9QEPC2',
+//     team_domain: 'inclusionorg',
+//     channel_id: 'CLGP1JG1H',
+//     channel_name: 'reservation_bot',
+//     user_id: 'UKQBEEYNP',
+//     user_name: 'fizal.sarif',
+//     command: '/reservation',
+//     text: '',
+//     response_url:
+//      'https://hooks.slack.com/commands/T2K9QEPC2/707710748180/tNzNk2CGdockyVKRbvZCmcVW',
+//     trigger_id: '708175223200.87330499410.dc31a2d99452af3876d9042b2019db8c'
+// }
+// Create reservations off slack
+router.post('/slack', (req, res) => {
+    console.log('====');
+    console.log(req.body);
+
+    handler('RESERVATION '+ req.body.text, req.body.user_name, mem);
+
+    if (mem[ req.body.user_name].success) {
+        const reservation = mem[ req.body.user_name];
+        if (reservation.date && reservation.time && reservation.phone) {
+            db.Reservation.create({
+                phone: reservation.phone,
+                time: reservation.time,
+                date: reservation.date
+            })
+        }
+    }
+
+    res.json({
+        "text": mem[ req.body.user_name].msg.replace('RESERVATION', '`/reservation`'),
+        "response_type": "in_channel"
+    })
+
+    // console.log('====');
+    // const twiml = new MessagingResponse();
+
+    // twiml.message(mem[req.body.From].msg);
+
+    // res.writeHead(200, {'Content-Type': 'text/xml'});
+    // res.end(twiml.toString());
+});
+
+
 // req.body format
 // {
 //     ToCountry: 'US',
