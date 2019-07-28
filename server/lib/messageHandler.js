@@ -9,7 +9,7 @@ module.exports = (input, phone, mem) => {
     return mem[phone];
   }
 
-  if (input === 'RESERVATION') {
+  if (input === 'RESERVATION' || input === 'RESERVATION ') {
     mem[phone] = {
       msg: 'What date would you like to join us? Reply with RESERVATION DD-MM',
       phone,
