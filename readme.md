@@ -20,3 +20,29 @@ deploy:
   api_key:
     secure: your_own_key
 ```
+
+## Screenshots
+
+<img src="phone.png" alt="alt text" height="200">
+<img src="slack.png" alt="alt text" height="200">
+
+## How to Run
+
+For the client
+- `cd client`
+- `npm i`
+- `npm run start`
+
+More on [CreateReactApp](https://github.com/facebook/create-react-app#quick-overview).
+
+For the server
+- `npm i`
+- `npm run start-dev`
+
+Testing
+- server: `npm run test`
+- client: `cd client && npm run test`
+
+## Required Environment Variables
+
+- `DATABASE_URL` a postgresql database url. Tables will be made on server start.
